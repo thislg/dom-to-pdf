@@ -3,7 +3,7 @@ let _createElement;
 let _isCanvasBlank;
 let downloadPdf;
 
-const domToImage = require('dom-to-image');
+const domToImage = require('dom-to-image-more');
 const { jsPDF } = require('jspdf');
 
 _cloneNode = (node, javascriptEnabled) => {
@@ -99,7 +99,7 @@ downloadPdf = (dom, options, cb) => {
     format: 'a4'
   };
 
-  ({filename, excludeClassNames = [], excludeTagNames = ['button', 'input', 'select'], overrideWidth, proxyUrl, compression, scale} = options);
+  ({filename, excludeClassNames = [], excludeTagNames = ['button', 'input', 'select'], overrideWidth, proxyUrl, compression, scale, domToImageOptions = {}} = options);
 
   overlayCSS = {
     position: 'fixed',
@@ -211,7 +211,8 @@ downloadPdf = (dom, options, cb) => {
 
   opts = {
     filter: filterFn,
-    proxy: proxyUrl
+    proxy: proxyUrl,
+    ...domToImageOptions
   };
 
   if (scale) {
